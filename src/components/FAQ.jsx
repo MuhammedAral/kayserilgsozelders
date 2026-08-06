@@ -26,11 +26,11 @@ const FAQ = () => {
   return (
     <section id="faq" className="container">
       <h2 className="section-title">Sıkça Sorulan Sorular</h2>
-      <div className="faq-list">
+      <div className="faq-list reveal">
         {faqs.map((faq, index) => (
           <div 
             key={index} 
-            className={`faq-item reveal ${activeIndex === index ? 'active' : ''}`}
+            className={`faq-item ${activeIndex === index ? 'active' : ''}`}
           >
             <button 
               className="faq-question"
