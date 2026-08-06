@@ -1,4 +1,4 @@
-import { GraduationCap, Users, BookOpen } from 'lucide-react';
+import { GraduationCap, Users } from 'lucide-react';
 
 const Stats = () => {
   return (
@@ -22,16 +22,6 @@ const Stats = () => {
             <div className="stat-content">
               <h3 className="stat-number">250+</h3>
               <p className="stat-label">Başarılı Öğrenci</p>
-            </div>
-          </div>
-          
-          <div className="stat-item glass">
-            <div className="stat-icon">
-              <BookOpen size={32} color="var(--primary-color)" />
-            </div>
-            <div className="stat-content">
-              <h3 className="stat-number">2</h3>
-              <p className="stat-label">Temel Branş (Fen & Mat)</p>
             </div>
           </div>
         </div>
