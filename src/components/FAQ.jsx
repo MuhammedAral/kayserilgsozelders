@@ -30,7 +30,7 @@ const FAQ = () => {
         {faqs.map((faq, index) => (
           <div 
             key={index} 
-            className={`faq-item ${activeIndex === index ? 'active' : ''}`}
+            className={`faq-item reveal ${activeIndex === index ? 'active' : ''}`}
           >
             <button 
               className="faq-question"

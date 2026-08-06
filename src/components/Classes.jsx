@@ -9,7 +9,7 @@ const Classes = () => {
     <section id="classes" className="container">
       <h2 className="section-title">Dersler & Kaynaklar</h2>
       
-      <div className="classes-tabs">
+      <div className="classes-tabs reveal">
         {classes.map((cls) => (
           <button
             key={cls}
@@ -21,7 +21,7 @@ const Classes = () => {
         ))}
       </div>
 
-      <div className="tab-content glass">
+      <div className="tab-content glass reveal">
         <div className="pdf-list-empty">
           <p>Bu bölüme yakında ders materyalleri eklenecektir.</p>
         </div>

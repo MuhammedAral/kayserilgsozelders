@@ -555,3 +555,143 @@
   .floating-buttons { bottom: 1rem; right: 1rem; }
   .float-btn { width: 50px; height: 50px; }
 }
+
+/* =========================================
+   PREMIUM ADDITIONS
+   ========================================= */
+
+/* 1. Scroll Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add slight delays to children inside a reveal grid */
+.about-grid .reveal:nth-child(1) { transition-delay: 0.1s; }
+.about-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
+.classes-grid .reveal:nth-child(1) { transition-delay: 0.1s; }
+.classes-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
+
+/* 2. Stats Section */
+.stats-section {
+  padding: 3rem 0;
+  margin-top: -3rem; /* Pull up slightly over the hero */
+  position: relative;
+  z-index: 10;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  transition: var(--transition-normal);
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  border-color: rgba(27, 107, 90, 0.4);
+  box-shadow: var(--shadow-glow);
+}
+
+.stat-icon {
+  background-color: rgba(27, 107, 90, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 3. Pulse Animation */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.float-whatsapp {
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseCall {
+  0% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(201, 168, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+
+.btn-call {
+  animation: pulseCall 2s infinite;
+}
+
+/* Float Tooltip */
+.float-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.float-tooltip {
+  position: absolute;
+  right: calc(100% + 15px);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  opacity: 0;
+  transform: translateX(10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.float-wrapper:hover .float-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .stats-section {
+    padding: 2rem 0;
+    margin-top: 0;
+  }
+  .float-tooltip {
+    display: none;
+  }
+}

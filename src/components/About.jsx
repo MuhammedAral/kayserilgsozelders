@@ -5,7 +5,7 @@ const About = () => {
     <section id="about" className="container">
       <h2 className="section-title">Hakkımda</h2>
       <div className="about-grid">
-        <div className="teacher-card glass">
+        <div className="teacher-card glass reveal">
           <div className="teacher-image">
             <img src="/saim-photo.jpeg" alt="Saim Ünsal" />
           </div>
@@ -17,7 +17,7 @@ const About = () => {
           </p>
         </div>
         
-        <div className="teacher-card glass">
+        <div className="teacher-card glass reveal">
           <div className="teacher-image placeholder">
             <Award size={40} color="var(--primary-color)" />
           </div>
