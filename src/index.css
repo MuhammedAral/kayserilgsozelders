@@ -33,6 +33,11 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* Sabit header'ın başlıkları kapatmasını engeller */
+}
+
 body {
   font-family: 'Outfit', sans-serif;
   background-color: var(--bg-color);
