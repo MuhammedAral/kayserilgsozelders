@@ -17,8 +17,11 @@ const Header = () => {
 
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <div className="logo">
-        <span className="text-gradient">Saim Ünsal</span>
+      <div className="logo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center' }}>
+        <span className="text-gradient" style={{ lineHeight: '1.2' }}>Saim Ünsal</span>
+        <span style={{ fontSize: '0.75rem', fontWeight: '500', color: 'var(--text-secondary)', marginTop: '2px', letterSpacing: '0.5px' }}>
+          Fen Bilgisi Öğretmeni
+        </span>
       </div>
       <nav className={`nav-links ${isMobileMenuOpen ? 'open' : ''}`}>
         <a href="#home" onClick={closeMenu}>Ana Sayfa</a>
