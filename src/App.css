@@ -695,3 +695,151 @@
     display: none;
   }
 }
+
+/* =========================================
+   CURRICULUM / CLASSES SECTION ADDITIONS
+   ========================================= */
+
+/* Subject Tabs (Matematik / Fen) */
+.subject-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.subject-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  transition: var(--transition-normal);
+  border: 1px solid transparent;
+}
+
+.subject-btn:hover {
+  color: var(--text-primary);
+}
+
+.subject-btn.active {
+  color: var(--primary-color);
+  background-color: rgba(27, 107, 90, 0.1);
+  border-color: rgba(27, 107, 90, 0.3);
+}
+
+/* Curriculum Accordion List */
+.curriculum-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.unit-card {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: var(--transition-normal);
+}
+
+.unit-card:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(27, 107, 90, 0.3);
+}
+
+.unit-card.expanded {
+  border-color: var(--primary-color);
+  background-color: rgba(27, 107, 90, 0.05);
+}
+
+.unit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.unit-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.unit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+
+.read-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+
+.read-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.unit-card.expanded .read-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.download-btn {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.download-btn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.unit-body {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+.unit-summary {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .unit-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .unit-actions {
+    width: 100%;
+  }
+  .action-btn {
+    flex: 1;
+  }
+}
