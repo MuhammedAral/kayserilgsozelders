@@ -73,13 +73,29 @@ const Classes = () => {
                     >
                       {expandedUnit === unit.id ? 'Gizle' : '📖 Konuyu Oku'}
                     </button>
-                    <a 
-                      href={unit.pdfLink} 
-                      className="action-btn download-btn"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      📥 PDF İndir
-                    </a>
+                    {unit.pdfLink !== '#' ? (
+                      <a 
+                        href={unit.pdfLink} 
+                        className="action-btn download-btn"
+                        onClick={(e) => e.stopPropagation()}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        📥 PDF İndir
+                      </a>
+                    ) : (
+                      <button 
+                        className="action-btn download-btn"
+                        style={{ opacity: 0.6, cursor: 'not-allowed' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          alert('Bu ünitenin PDF dosyası henüz hazırlanıyor. Çok yakında eklenecektir!');
+                        }}
+                        title="Yakında Eklenecek"
+                      >
+                        ⏳ Yakında
+                      </button>
+                    )}
                   </div>
                 </div>
                 
