@@ -1,0 +1,100 @@
+# =====================================================================
+#  Kayseri LGS Özel Ders - Apache / Hostinger yapılandırması
+#  Bu dosya public/ içinde durur, build sırasında dist/ köküne kopyalanır.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+#  1) MIME tipleri
+# ---------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType application/manifest+json      .webmanifest
+  AddType image/webp                     .webp
+  AddType image/svg+xml                  .svg
+  AddType image/x-icon                   .ico
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  2) Sıkıştırma
+# ---------------------------------------------------------------------
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml \
+    application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+    application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  3) Önbellek (cache) stratejisi
+#
+#  Vite, JS/CSS dosyalarını içerik hash'iyle üretir (app-a1b2c3.js).
+#  İçerik değişince dosya adı da değişir; bu yüzden bu dosyalar
+#  "immutable" olarak 1 yıl önbelleğe alınabilir.
+#
+#  Buna karşılık favicon, manifest, görseller ve index.html sabit
+#  isimlidir. Bunlara uzun cache verilirse güncelleme kullanıcıya
+#  günlerce ulaşmaz (daha önce dosya adını değiştirerek çözülmeye
+#  çalışılan sorunun kaynağı buydu). Bu yüzden onlara kısa süre +
+#  zorunlu doğrulama veriyoruz.
+# ---------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Hash'li build çıktıları -> sonsuz cache
+  <FilesMatch "\.(js|mjs|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Fontlar -> uzun cache
+  <FilesMatch "\.(woff2?|ttf|otf|eot)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Sabit isimli görseller -> 7 gün, sonrasında sunucuya sor
+  <FilesMatch "\.(jpg|jpeg|png|webp|avif|gif)$">
+    Header set Cache-Control "public, max-age=604800, must-revalidate"
+  </FilesMatch>
+
+  # Favicon / logo / manifest -> 1 gün, sonrasında sunucuya sor
+  <FilesMatch "(favicon.*\.(ico|svg|png)|apple-touch-icon\.png|icon-maskable-512\.png|web-app-manifest-.*\.png|site\.webmanifest)$">
+    Header set Cache-Control "public, max-age=86400, must-revalidate"
+  </FilesMatch>
+
+  # HTML ve sitemap -> asla saklama, her zaman doğrula
+  <FilesMatch "\.(html|xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # ---------------------------------------------------------------------
+  #  4) Güvenlik başlıkları
+  # ---------------------------------------------------------------------
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  5) Tek sayfalık uygulama (SPA) yönlendirmesi
+#     Var olmayan bir yol istenirse index.html döner; React uygulaması
+#     sayfayı kendisi çizer. Gerçek dosyalar bu kuraldan etkilenmez.
+# ---------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Var olan dosya/dizinlere dokunma
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Geri kalan her şey index.html'e
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ---------------------------------------------------------------------
+#  6) Dizin listelemesini kapat
+# ---------------------------------------------------------------------
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>

@@ -1,30 +1,47 @@
 import { useEffect } from 'react';
 
+/**
+ * .reveal sınıfına sahip elemanları görünür olduklarında açığa çıkarır.
+ * - Hareket azaltma tercihi olan kullanıcılarda animasyon tamamen atlanır.
+ * - MutationObserver ile sonradan DOM'a eklenen .reveal elemanları da izlenir.
+ */
 const useScrollReveal = () => {
   useEffect(() => {
-    const observerCallback = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal-visible');
-          // Optional: Stop observing once revealed
-          // observer.unobserve(entry.target);
-        }
-      });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealAll = () =>
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('reveal-visible'));
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      revealAll();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+    );
+
+    const observeAll = () => {
+      document
+        .querySelectorAll('.reveal:not(.reveal-visible)')
+        .forEach((el) => observer.observe(el));
     };
 
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15 // Trigger when 15% of the element is visible
-    };
+    observeAll();
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    const elements = document.querySelectorAll('.reveal');
-
-    elements.forEach((el) => observer.observe(el));
+    const mutationObserver = new MutationObserver(observeAll);
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
+      mutationObserver.disconnect();
+      observer.disconnect();
     };
   }, []);
 };

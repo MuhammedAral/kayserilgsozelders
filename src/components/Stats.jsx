@@ -1,29 +1,26 @@
 import { GraduationCap, Users } from 'lucide-react';
 
+const STATS = [
+  { Icon: GraduationCap, number: '10+', label: 'Yıllık Tecrübe' },
+  { Icon: Users, number: '250+', label: 'Başarılı Öğrenci' },
+];
+
 const Stats = () => {
   return (
-    <section className="stats-section reveal">
+    <section className="stats-section reveal" aria-label="Öne çıkan rakamlar">
       <div className="container">
         <div className="stats-grid">
-          <div className="stat-item glass">
-            <div className="stat-icon">
-              <GraduationCap size={32} color="var(--primary-color)" />
+          {STATS.map(({ Icon, number, label }) => (
+            <div key={label} className="stat-item glass">
+              <div className="stat-icon">
+                <Icon size={32} color="var(--primary-color)" aria-hidden="true" />
+              </div>
+              <div className="stat-content">
+                <p className="stat-number">{number}</p>
+                <p className="stat-label">{label}</p>
+              </div>
             </div>
-            <div className="stat-content">
-              <h3 className="stat-number">10+</h3>
-              <p className="stat-label">Yıllık Tecrübe</p>
-            </div>
-          </div>
-          
-          <div className="stat-item glass">
-            <div className="stat-icon">
-              <Users size={32} color="var(--primary-color)" />
-            </div>
-            <div className="stat-content">
-              <h3 className="stat-number">250+</h3>
-              <p className="stat-label">Başarılı Öğrenci</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

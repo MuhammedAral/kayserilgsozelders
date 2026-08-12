@@ -1,46 +1,26 @@
 import { Star } from 'lucide-react';
+import { reviews } from '../data/reviewsData';
 
 const Reviews = () => {
-  const reviews = [
-    {
-      id: 1,
-      author: 'Ayşe Yılmaz',
-      text: 'Saim Hoca ve matematik öğretmenimiz sayesinde kızımın LGS netleri inanılmaz arttı. Emekleri için çok teşekkürler.',
-      initial: 'A'
-    },
-    {
-      id: 2,
-      author: 'Mehmet Demir',
-      text: 'Maarif modeli yaklaşımıyla çocuklara sadece ders değil, çalışma disiplini de kazandırdılar. Kesinlikle tavsiye ederim.',
-      initial: 'M'
-    },
-    {
-      id: 3,
-      author: 'Zeynep Kaya',
-      text: 'Matematik korkusu olan oğlum, dersleri iple çeker oldu. İki hocamız da alanında gerçekten uzmanlar.',
-      initial: 'Z'
-    }
-  ];
-
   return (
     <section id="reviews" className="container">
       <h2 className="section-title">Veli ve Öğrenci Yorumları</h2>
       <div className="reviews-grid">
         {reviews.map((review) => (
-          <div key={review.id} className="review-card glass">
-            <div className="review-stars">
-              <Star fill="#fbbf24" size={20} />
-              <Star fill="#fbbf24" size={20} />
-              <Star fill="#fbbf24" size={20} />
-              <Star fill="#fbbf24" size={20} />
-              <Star fill="#fbbf24" size={20} />
+          <div key={review.id} className="review-card glass reveal">
+            <div className="review-stars" role="img" aria-label="5 üzerinden 5 yıldız">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} fill="currentColor" size={20} aria-hidden="true" />
+              ))}
             </div>
-            <p className="review-text">"{review.text}"</p>
+            <blockquote className="review-text">{review.text}</blockquote>
             <div className="review-author">
-              <div className="author-avatar">{review.initial}</div>
+              <div className="author-avatar" aria-hidden="true">
+                {review.initial}
+              </div>
               <div>
-                <strong style={{ display: 'block' }}>{review.author}</strong>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Öğrenci Velisi</span>
+                <strong className="review-author-name">{review.author}</strong>
+                <span className="review-author-role">{review.role}</span>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 import Stats from './components/Stats';
 import About from './components/About';
 import Classes from './components/Classes';
+import Reviews from './components/Reviews';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
@@ -14,12 +15,16 @@ function App() {
 
   return (
     <>
+      <a href="#main" className="skip-link">
+        İçeriğe geç
+      </a>
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <Stats />
         <About />
         <Classes />
+        <Reviews />
         <FAQ />
       </main>
       <Footer />

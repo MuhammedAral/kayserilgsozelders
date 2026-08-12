@@ -22,11 +22,25 @@
 }
 
 .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.logo-name {
   font-size: 1.5rem;
   font-weight: 800;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  line-height: 1.2;
+}
+
+.logo-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
 }
 
 .nav-links {
@@ -73,7 +87,9 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: var(--glass-bg);
+    /* Neredeyse opak: arkadaki başlık metni menünün okunmasını engellemesin.
+       backdrop-filter yalnızca destekleyen tarayıcılarda ekstra bir dokunuş. */
+    background-color: rgba(10, 14, 26, 0.97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     flex-direction: column;
@@ -168,6 +184,7 @@
 .hero-image {
   width: 100%;
   height: auto;
+  aspect-ratio: 3 / 4; /* layout shift (CLS) olmasın diye alan baştan rezerve edilir */
   display: block;
   object-fit: cover;
   border: 1px solid var(--glass-border);
@@ -371,6 +388,12 @@
   border: 1px solid var(--glass-border);
 }
 
+.faq-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 .faq-question {
   width: 100%;
   text-align: left;
@@ -382,6 +405,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   transition: var(--transition-fast);
 }
 
@@ -389,18 +413,39 @@
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.faq-answer {
-  padding: 0 1.5rem;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-  color: var(--text-secondary);
-  background-color: rgba(0, 0, 0, 0.2);
+.faq-chevron {
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
 }
 
-.faq-item.active .faq-answer {
+.faq-item.active .faq-chevron {
+  transform: rotate(180deg);
+}
+
+/* İçerik yüksekliği sabit bir max-height'a hapsedilmez:
+   grid-template-rows 0fr -> 1fr tekniğiyle her uzunlukta metin sorunsuz açılır. */
+.faq-answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: grid-template-rows var(--transition-normal), visibility 0s linear 0.3s;
+}
+
+.faq-item.active .faq-answer-wrap {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows var(--transition-normal), visibility 0s;
+}
+
+.faq-answer {
+  overflow: hidden;
+  color: var(--text-secondary);
+}
+
+.faq-answer p {
   padding: 1.5rem;
-  max-height: 200px; /* arbitrary height for animation */
+  margin: 0;
 }
 
 .faq-item.active .faq-question {
@@ -550,10 +595,15 @@
   .hero-image-wrapper:hover {
     transform: translateY(-5px);
   }
-  .hero-content h1 { font-size: 2.5rem; }
+  .hero-content h1 { font-size: 2.5rem; text-wrap: balance; }
   .section-title { font-size: 2rem; }
   .floating-buttons { bottom: 1rem; right: 1rem; }
   .float-btn { width: 50px; height: 50px; }
+}
+
+@media (max-width: 420px) {
+  .hero-content h1 { font-size: 2.1rem; }
+  .hero-content p { font-size: 1.1rem; }
 }
 
 /* =========================================
@@ -759,10 +809,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  cursor: pointer;
+  padding: 0.75rem 1.5rem 0.75rem 0;
   flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Tüm başlık satırı gerçek bir <button>: klavye ve ekran okuyucuyla çalışır */
+.unit-toggle {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  padding: 0.75rem 1rem 0.75rem 1.5rem;
+  text-align: left;
+  color: var(--text-primary);
+  border-radius: 10px;
+  transition: var(--transition-fast);
+}
+
+.unit-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .unit-title {
@@ -770,7 +837,28 @@
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
-  flex: 1;
+}
+
+.unit-toggle-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.unit-card.expanded .unit-toggle-hint {
+  color: var(--primary-color);
+}
+
+.unit-chevron {
+  transition: transform var(--transition-normal);
+}
+
+.unit-card.expanded .unit-chevron {
+  transform: rotate(180deg);
 }
 
 .unit-actions {
@@ -788,22 +876,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
   border: 1px solid transparent;
-}
-
-.read-btn {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
-  border-color: var(--glass-border);
-}
-
-.read-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.unit-card.expanded .read-btn {
-  background-color: var(--primary-color);
-  color: white;
 }
 
 .download-btn {
@@ -816,12 +890,32 @@
   background-color: rgba(239, 68, 68, 0.2);
 }
 
+.download-btn.is-pending {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  border-color: var(--glass-border);
+}
+
+.download-btn.is-pending:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.unit-body-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--transition-normal), visibility 0s linear 0.3s;
+}
+
+.unit-card.expanded .unit-body-wrap {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows var(--transition-normal), visibility 0s;
+}
+
 .unit-body {
-  padding: 0 1.5rem 1.5rem 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 0.5rem;
-  padding-top: 1.5rem;
-  animation: slideDown 0.3s ease-out forwards;
+  overflow: hidden;
 }
 
 .unit-summary {
@@ -829,17 +923,223 @@
   line-height: 1.7;
   font-size: 1rem;
   margin: 0;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 768px) {
   .unit-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    padding: 0.5rem 1rem 1rem;
+  }
+  .unit-toggle {
+    padding: 0.75rem 0.25rem;
   }
   .unit-actions {
     width: 100%;
   }
   .action-btn {
     flex: 1;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY / A11Y
+   ========================================= */
+
+/* Klavyeyle gezenler için görünür odak halkası (fare kullanıcısını rahatsız etmez) */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Ekran okuyucu / klavye kullanıcıları için "içeriğe geç" bağlantısı */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: -100px;
+  transform: translateX(-50%);
+  z-index: 200;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 10px 10px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* =========================================
+   FOOTER (satır içi stiller yerine sınıflar)
+   ========================================= */
+.footer-intro {
+  margin-top: 1rem;
+  color: var(--text-secondary);
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--primary-color);
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.footer-social a {
+  color: var(--primary-color);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-flex;
+}
+
+.footer-social a:hover {
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.footer-keywords {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* =========================================
+   REVIEWS
+   ========================================= */
+.review-text {
+  border: 0;
+  padding: 0;
+  quotes: '“' '”';
+}
+
+.review-text::before {
+  content: open-quote;
+}
+
+.review-text::after {
+  content: close-quote;
+}
+
+.review-author-name {
+  display: block;
+}
+
+.review-author-role {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.reviews-grid .reveal:nth-child(1) { transition-delay: 0.05s; }
+.reviews-grid .reveal:nth-child(2) { transition-delay: 0.15s; }
+.reviews-grid .reveal:nth-child(3) { transition-delay: 0.25s; }
+
+/* =========================================
+   TOAST (native alert() yerine)
+   ========================================= */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translate(-50%, 1.5rem);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: min(90vw, 460px);
+  padding: 0.9rem 1rem 0.9rem 1.15rem;
+  border-radius: 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.toast-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.toast-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.toast-text {
+  flex: 1;
+}
+
+.toast-close {
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+  transition: color var(--transition-fast);
+}
+
+.toast-close:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .toast {
+    bottom: 1rem;
+    /* Yüzen butonların üstüne binmesin */
+    max-width: calc(100vw - 5.5rem);
+    left: 1rem;
+    transform: translate(0, 1.5rem);
+  }
+  .toast-visible {
+    transform: translate(0, 0);
+  }
+}
+
+/* =========================================
+   HAREKET AZALTMA TERCİHİ
+   Vestibüler rahatsızlığı olan kullanıcılar için tüm
+   sürekli animasyonlar ve geçişler kapatılır.
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float-whatsapp,
+  .btn-call {
+    animation: none;
+  }
+
+  .hero-image-wrapper,
+  .hero-image-wrapper:hover {
+    transform: none;
   }
 }
