@@ -1,0 +1,15 @@
+{
+  "name": "Kayseri LGS Özel Ders - Saim Ünsal",
+  "short_name": "LGS Özel Ders",
+  "description": "Kayseri'de LGS, 5, 6 ve 7. sınıf öğrencilerine özel Fen Bilgisi ve Matematik dersleri.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "lang": "tr",
+  "icons": [
+    { "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
