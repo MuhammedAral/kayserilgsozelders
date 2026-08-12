@@ -63,11 +63,14 @@ ul {
   list-style: none;
 }
 
-/* Glassmorphism utility */
+/* Kart yüzeyi.
+   backdrop-filter bilerek KULLANILMIYOR: kartların arkasında düz bir koyu
+   zemin var, yani bulanıklığın görsel katkısı yok; buna karşılık her kart
+   ayrı bir kompozit katmanı açtığı için orta segment Android'de kaydırmayı
+   gözle görülür yavaşlatıyordu. Blur yalnızca içeriğin altından aktığı
+   yerlerde (header, mobil menü) kaldı. */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
 }
 

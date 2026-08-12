@@ -17,8 +17,8 @@ const Footer = () => {
           <div className="footer-col">
             <h3 className="text-gradient">{SITE_NAME}</h3>
             <p className="footer-intro">
-              LGS ve Ortaokul seviyesinde uzman kadroyla profesyonel eğitim desteği. Geleceğinizi
-              şansa bırakmayın.
+              LGS ve ortaokul seviyesinde birebir özel ders. Her öğrenciyle seviye tespitiyle
+              başlanır, program okuldaki konuya göre kurulur.
             </p>
           </div>
 

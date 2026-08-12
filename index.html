@@ -14,21 +14,20 @@
     <!-- SEO: Title -->
     <title>Kayseri LGS Özel Ders | Fen Bilgisi ve Matematik | Saim Ünsal</title>
 
-    <!-- SEO: Meta Description -->
-    <meta name="description" content="Kayseri'de LGS, 5, 6 ve 7. sınıf öğrencilerine özel Fen Bilgisi ve Matematik dersleri. 10 yıllık tecrübeli Erciyes Üniversitesi mezunu öğretmenlerle Maarif modeline uygun birebir eğitim. Melikgazi, Kocasinan, Talas, Hacılar, İncesu bölgelerinde hizmet." />
-
-    <!-- SEO: Keywords -->
-    <meta name="keywords" content="Kayseri özel ders, LGS özel ders Kayseri, Kayseri matematik özel ders, Kayseri fen bilgisi özel ders, LGS hazırlık Kayseri, 5. sınıf özel ders Kayseri, 6. sınıf özel ders Kayseri, 7. sınıf özel ders Kayseri, Melikgazi özel ders, Kocasinan özel ders, Talas özel ders, Saim Ünsal, Maarif modeli özel ders" />
+    <!-- SEO: Meta Description
+         DİKKAT: src/data/site.js > PAGE_DESCRIPTION ile birebir aynı olmalıdır.
+         Ayrışırsa scripts/prerender.mjs build'i hata ile durdurur. -->
+    <meta name="description" content="Kayseri'de LGS, 5, 6 ve 7. sınıf öğrencilerine birebir Fen Bilgisi ve Matematik özel dersi. Erciyes Üniversitesi mezunu, 10 yıllık tecrübeli öğretmenle Maarif modeline uygun eğitim. Melikgazi, Kocasinan, Talas, Hacılar, İncesu bölgelerinde hizmet." />
 
     <!-- SEO: Author & Robots -->
     <meta name="author" content="Saim Ünsal" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://kayserilgsozelders.com/" />
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn paylaşımları) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Kayseri LGS Özel Ders | Fen Bilgisi ve Matematik" />
-    <meta property="og:description" content="Kayseri'de 10 yıllık tecrübeyle LGS, 5, 6 ve 7. sınıflara özel Fen Bilgisi ve Matematik dersleri. Maarif modeline uygun birebir eğitim." />
+    <meta property="og:description" content="Kayseri'de 10 yıllık tecrübeyle LGS, 5, 6 ve 7. sınıflara birebir Fen Bilgisi ve Matematik özel dersi. Maarif modeline uygun eğitim." />
     <meta property="og:url" content="https://kayserilgsozelders.com/" />
     <meta property="og:site_name" content="Kayseri LGS Özel Ders" />
     <meta property="og:locale" content="tr_TR" />
@@ -41,135 +40,14 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Kayseri LGS Özel Ders | Fen Bilgisi ve Matematik" />
-    <meta name="twitter:description" content="Kayseri'de 10 yıllık tecrübeyle LGS, 5, 6 ve 7. sınıflara özel Fen Bilgisi ve Matematik dersleri." />
+    <meta name="twitter:description" content="Kayseri'de 10 yıllık tecrübeyle LGS, 5, 6 ve 7. sınıflara birebir Fen Bilgisi ve Matematik özel dersi." />
     <meta name="twitter:image" content="https://kayserilgsozelders.com/og-image.jpg" />
     <meta name="twitter:image:alt" content="Kayseri LGS Özel Ders - Saim Ünsal" />
 
-    <!-- Schema.org Structured Data: LocalBusiness + EducationalOrganization -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "EducationalOrganization"],
-      "name": "Kayseri LGS Özel Ders - Saim Ünsal",
-      "description": "Kayseri'de LGS, 5, 6 ve 7. sınıf öğrencilerine özel Fen Bilgisi ve Matematik dersleri. 10 yıllık tecrübeli Erciyes Üniversitesi mezunu öğretmenlerle Maarif modeline uygun birebir eğitim.",
-      "url": "https://kayserilgsozelders.com",
-      "telephone": "+905548557040",
-      "image": "https://kayserilgsozelders.com/og-image.jpg",
-      "priceRange": "$$",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kayseri",
-        "addressRegion": "Kayseri",
-        "addressCountry": "TR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 38.7312,
-        "longitude": 35.4787
-      },
-      "areaServed": [
-        {"@type": "City", "name": "Kayseri"},
-        {"@type": "AdministrativeArea", "name": "Melikgazi"},
-        {"@type": "AdministrativeArea", "name": "Kocasinan"},
-        {"@type": "AdministrativeArea", "name": "Talas"},
-        {"@type": "AdministrativeArea", "name": "Hacılar"},
-        {"@type": "AdministrativeArea", "name": "İncesu"}
-      ],
-      "founder": {
-        "@type": "Person",
-        "name": "Saim Ünsal",
-        "jobTitle": "Fen Bilgisi Öğretmeni",
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Erciyes Üniversitesi"
-        }
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Özel Ders Hizmetleri",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "EducationalOccupationalProgram",
-              "name": "LGS Hazırlık Özel Ders",
-              "educationalLevel": "8. Sınıf"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "EducationalOccupationalProgram",
-              "name": "7. Sınıf Fen ve Matematik Özel Ders",
-              "educationalLevel": "7. Sınıf"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "EducationalOccupationalProgram",
-              "name": "6. Sınıf Fen ve Matematik Özel Ders",
-              "educationalLevel": "6. Sınıf"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "EducationalOccupationalProgram",
-              "name": "5. Sınıf Fen ve Matematik Özel Ders",
-              "educationalLevel": "5. Sınıf"
-            }
-          }
-        ]
-      },
-      "sameAs": [
-        "https://www.instagram.com/sunsal_sa"
-      ]
-    }
-    </script>
-
-    <!-- Schema.org Structured Data: FAQPage
-         NOT: Sorular/cevaplar src/data/faqData.js ile birebir aynı olmalıdır. -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Özel dersler nerede yapılıyor?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Derslerimiz öğrencinin kendi evinde veya belirlenen uygun bir çalışma ortamında (kütüphane, eğitim ofisi) yapılabilmektedir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Ders süreleri ve programı nasıl ayarlanıyor?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Her bir ders 1 saat olarak planlanmaktadır. Program, öğrencinin okul saatlerine ve seviyesine göre tamamen kişiye özel olarak ayarlanır."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Maarif eğitim modelinin normal eğitimden farkı nedir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Maarif modeli; öğrenciyi sadece akademik olarak değil, ahlaki, kültürel ve sosyal yönlerden de geliştirmeyi hedefleyen bütüncül bir eğitim yaklaşımıdır."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Grup dersleriniz var mı?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Önceliğimiz birebir (özel) derslerdir; ancak talep doğrultusunda 2-3 kişilik seviye grupları da oluşturulabilmektedir."
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- Yapılandırılmış veri (JSON-LD)
+         Elle YAZILMAZ. scripts/prerender.mjs, src/data/site.js + faqData.js +
+         curriculumData.js dosyalarından build sırasında üretip buraya basar. -->
+    <!--json-ld-->
 
     <!-- LCP görselini (hero fotoğrafı) erkenden indirmeye başla -->
     <link
@@ -181,10 +59,12 @@
       fetchpriority="high"
     />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts — yalnızca gerçekten kullanılan 5 ağırlık.
+         TODO: woff2'leri kendi sunucumuza alırsak render'ı bloke eden bu iki
+         üçüncü taraf bağlantısı da kalkar (.htaccess'te font cache kuralı hazır). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

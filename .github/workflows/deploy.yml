@@ -10,25 +10,42 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Get latest code
-      uses: actions/checkout@v4
+      - name: Get latest code
+        uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-    - name: Install Dependencies
-      run: npm install
+      # npm install yerine npm ci: lock dosyasına birebir uyar, build tekrarlanabilir olur.
+      - name: Install Dependencies
+        run: npm ci
 
-    - name: Build Project
-      run: npm run build
+      - name: Lint
+        run: npm run lint
 
-    - name: Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
-        server-dir: ./
+      # vite build + SSR build + scripts/prerender.mjs
+      - name: Build Project
+        run: npm run build
+
+      # Prerender'ın gerçekten çalıştığını doğrula: index.html içinde uygulama
+      # metni yoksa deploy etmeden dur. Sessizce boş kabuk yayınlamaktansa
+      # build'in kırmızı yanması iyidir.
+      - name: Verify prerendered output
+        run: |
+          grep -q "Geleceğe Hazırlıyoruz" dist/index.html \
+            || (echo "HATA: dist/index.html prerender edilmemiş." && exit 1)
+          grep -q "application/ld+json" dist/index.html \
+            || (echo "HATA: JSON-LD yapılandırılmış veri eksik." && exit 1)
+          echo "Prerender doğrulandı: $(wc -c < dist/index.html) bayt"
+
+      - name: Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./

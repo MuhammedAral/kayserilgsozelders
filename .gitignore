@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Görsel/logo üretiminden kalan geçici dosyalar
+_to_delete/
+*.psd
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

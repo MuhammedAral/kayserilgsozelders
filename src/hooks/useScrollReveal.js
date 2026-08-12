@@ -3,18 +3,19 @@ import { useEffect } from 'react';
 /**
  * .reveal sınıfına sahip elemanları görünür olduklarında açığa çıkarır.
  * - Hareket azaltma tercihi olan kullanıcılarda animasyon tamamen atlanır.
- * - MutationObserver ile sonradan DOM'a eklenen .reveal elemanları da izlenir.
+ * - Prerender edilmiş HTML hydrate olmadan önce de içerik görünür kalsın diye
+ *   .reveal elemanları CSS'te varsayılan olarak görünürdür; bu hook yalnızca
+ *   JavaScript çalıştığında animasyonu devreye alır (bkz. App.css / .js-reveal).
  */
 const useScrollReveal = () => {
   useEffect(() => {
+    const root = document.documentElement;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealAll = () =>
-      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('reveal-visible'));
 
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-      revealAll();
-      return undefined;
-    }
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) return undefined;
+
+    // Animasyonu ancak burada açıyoruz: JS çalışmazsa içerik gizli kalmaz.
+    root.classList.add('js-reveal');
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -28,20 +29,11 @@ const useScrollReveal = () => {
       { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
     );
 
-    const observeAll = () => {
-      document
-        .querySelectorAll('.reveal:not(.reveal-visible)')
-        .forEach((el) => observer.observe(el));
-    };
-
-    observeAll();
-
-    const mutationObserver = new MutationObserver(observeAll);
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
     return () => {
-      mutationObserver.disconnect();
       observer.disconnect();
+      root.classList.remove('js-reveal');
     };
   }, []);
 };

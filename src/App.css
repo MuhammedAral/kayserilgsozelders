@@ -246,59 +246,115 @@
   font-weight: 700;
 }
 
-/* About Section */
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.teacher-card {
-  padding: 2rem;
-  border-radius: 20px;
+/* Bölüm altı açıklama metni */
+.section-intro {
+  max-width: 60ch;
+  margin: -1rem auto 2.5rem;
   text-align: center;
-  transition: var(--transition-normal);
+  color: var(--text-secondary);
 }
 
-.teacher-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow-glow);
-  border-color: rgba(27, 107, 90, 0.3);
+/* About Section — tek öğretmen: solda tanıtım, sağda nitelik kartları */
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
 }
 
-.teacher-icon, .teacher-image {
-  width: 100px;
-  height: 100px;
-  background-color: rgba(27, 107, 90, 0.1);
+.about-portrait {
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-  color: var(--primary-color);
   overflow: hidden;
   border: 2px solid var(--primary-color);
+  background-color: rgba(27, 107, 90, 0.1);
+  margin-bottom: 1.25rem;
 }
 
-.teacher-image img {
+.about-portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.teacher-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+.about-name {
+  font-size: 1.6rem;
+  margin-bottom: 0.15rem;
 }
 
-.teacher-card h4 {
+.about-role {
   color: var(--primary-color);
-  margin-bottom: 1rem;
   font-weight: 500;
+  margin-bottom: 1.25rem;
 }
 
-.teacher-card p {
+.about-text {
   color: var(--text-secondary);
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
+
+.about-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.credential-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
+  border-radius: 14px;
+  transition: border-color var(--transition-normal), transform var(--transition-normal);
+}
+
+.credential-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(27, 107, 90, 0.35);
+}
+
+.credential-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 11px;
+  background-color: rgba(27, 107, 90, 0.12);
+}
+
+.credential-title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.credential-text {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 /* Classes Section (Tabs) */
@@ -610,23 +666,28 @@
    PREMIUM ADDITIONS
    ========================================= */
 
-/* 1. Scroll Reveal Animations */
-.reveal {
+/* 1. Scroll Reveal Animations
+   ÖNEMLİ: .reveal varsayılan olarak GÖRÜNÜRDÜR. Sayfa build sırasında statik
+   HTML'e basıldığı için, JavaScript çalıştırmayan bir tarayıcı (arama motoru
+   botlarının bir kısmı, yapay zekâ tarayıcıları) içeriği eksiksiz görmelidir.
+   Animasyon yalnızca useScrollReveal <html>'e .js-reveal eklediğinde açılır. */
+.js-reveal .reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1),
+              transform 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
-.reveal.reveal-visible {
+.js-reveal .reveal.reveal-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Add slight delays to children inside a reveal grid */
-.about-grid .reveal:nth-child(1) { transition-delay: 0.1s; }
-.about-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
-.classes-grid .reveal:nth-child(1) { transition-delay: 0.1s; }
-.classes-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
+.js-reveal .about-credentials .reveal:nth-child(1) { transition-delay: 0.05s; }
+.js-reveal .about-credentials .reveal:nth-child(2) { transition-delay: 0.1s; }
+.js-reveal .about-credentials .reveal:nth-child(3) { transition-delay: 0.15s; }
+.js-reveal .about-credentials .reveal:nth-child(4) { transition-delay: 0.2s; }
 
 /* 2. Stats Section */
 .stats-section {
@@ -684,26 +745,10 @@
   font-weight: 500;
 }
 
-/* 3. Pulse Animation */
-@keyframes pulseGlow {
-  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-}
-
-.float-whatsapp {
-  animation: pulseGlow 2s infinite;
-}
-
-@keyframes pulseCall {
-  0% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(201, 168, 76, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
-}
-
-.btn-call {
-  animation: pulseCall 2s infinite;
-}
+/* 3. Yüzen butonlar
+   Sürekli (infinite) nabız animasyonları kaldırıldı: mobilde kesintisiz
+   kompozit katmanı çalıştırıp pil tüketiyor ve görsel gürültü yaratıyordu.
+   Dikkat çekmeyi hover/focus'taki büyüme hareketi zaten sağlıyor. */
 
 /* Float Tooltip */
 .float-wrapper {
@@ -787,6 +832,12 @@
   gap: 1rem;
 }
 
+/* Seçili olmayan sınıf/ders listeleri. display:none olduğu için odak
+   sırasından ve erişilebilirlik ağacından da çıkarlar. */
+.curriculum-list.is-hidden {
+  display: none;
+}
+
 .unit-card {
   background-color: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--glass-border);
@@ -814,9 +865,19 @@
   gap: 0.5rem;
 }
 
+/* Ünite adı gerçek bir başlık (h3): belge taslağı doğru çıkar, arama
+   motoru ünite adlarını alt başlık olarak okur. */
+.unit-heading {
+  flex: 1 1 320px;
+  display: flex;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 /* Tüm başlık satırı gerçek bir <button>: klavye ve ekran okuyucuyla çalışır */
 .unit-toggle {
-  flex: 1 1 320px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1046,74 +1107,6 @@
 .reviews-grid .reveal:nth-child(3) { transition-delay: 0.25s; }
 
 /* =========================================
-   TOAST (native alert() yerine)
-   ========================================= */
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: 2rem;
-  transform: translate(-50%, 1.5rem);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: min(90vw, 460px);
-  padding: 0.9rem 1rem 0.9rem 1.15rem;
-  border-radius: 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-lg);
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  font-weight: 500;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-normal), transform var(--transition-normal);
-}
-
-.toast-visible {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  pointer-events: auto;
-}
-
-.toast-icon {
-  font-size: 1.1rem;
-  line-height: 1;
-}
-
-.toast-text {
-  flex: 1;
-}
-
-.toast-close {
-  color: var(--text-secondary);
-  font-size: 1.4rem;
-  line-height: 1;
-  padding: 0 0.25rem;
-  transition: color var(--transition-fast);
-}
-
-.toast-close:hover {
-  color: var(--text-primary);
-}
-
-@media (max-width: 768px) {
-  .toast {
-    bottom: 1rem;
-    /* Yüzen butonların üstüne binmesin */
-    max-width: calc(100vw - 5.5rem);
-    left: 1rem;
-    transform: translate(0, 1.5rem);
-  }
-  .toast-visible {
-    transform: translate(0, 0);
-  }
-}
-
-/* =========================================
    HAREKET AZALTMA TERCİHİ
    Vestibüler rahatsızlığı olan kullanıcılar için tüm
    sürekli animasyonlar ve geçişler kapatılır.
@@ -1128,14 +1121,9 @@
     scroll-behavior: auto !important;
   }
 
-  .reveal {
+  .js-reveal .reveal {
     opacity: 1;
     transform: none;
-  }
-
-  .float-whatsapp,
-  .btn-call {
-    animation: none;
   }
 
   .hero-image-wrapper,

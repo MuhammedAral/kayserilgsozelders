@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { TEACHER_NAME, TEACHER_TITLE } from '../data/site';
+import { reviews } from '../data/reviewsData';
 
+// "Yorumlar" bağlantısı, ancak gerçek yorum girildiğinde görünür;
+// aksi halde var olmayan bir bölüme çapa atmış oluruz.
 const NAV_ITEMS = [
   { href: '#home', label: 'Ana Sayfa' },
   { href: '#about', label: 'Hakkımda' },
   { href: '#classes', label: 'Dersler' },
-  { href: '#reviews', label: 'Yorumlar' },
+  ...(reviews.length > 0 ? [{ href: '#reviews', label: 'Yorumlar' }] : []),
   { href: '#faq', label: 'SSS' },
   { href: '#contact', label: 'İletişim' },
 ];

@@ -2,6 +2,9 @@ import { Star } from 'lucide-react';
 import { reviews } from '../data/reviewsData';
 
 const Reviews = () => {
+  // Gerçek yorum yoksa bölüm hiç basılmaz. Yorum eklendiğinde kendiliğinden görünür.
+  if (reviews.length === 0) return null;
+
   return (
     <section id="reviews" className="container">
       <h2 className="section-title">Veli ve Öğrenci Yorumları</h2>
